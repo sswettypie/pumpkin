@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>for u</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Fredoka',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background-image:url('bg.png');
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    overflow:hidden;
+    color:#4a4a4a;
+}
+
+#stage1{
+    width:90%;
+    max-width:400px;
+    cursor:pointer;
+    animation:bounce 2s infinite;
+}
+
+.gmail-notif{
+    background:rgba(255,255,255,0.9);
+    border-radius:15px;
+    padding:15px;
+    display:flex;
+    align-items:center;
+    box-shadow:0 10px 25px rgba(0,0,0,0.1);
+}
+
+.gmail-text h4{
+    color:#333;
+    font-size:1.15rem;
+    font-weight:500;
+}
+
+.gmail-text p{
+    color:#666;
+    font-size:0.95rem;
+}
+
+.card{
+    background:rgba(255,255,255,0.85);
+    backdrop-filter:blur(10px);
+    border-radius:20px;
+    padding:30px;
+    text-align:center;
+    width:320px;
+    display:none;
+    box-shadow:0 10px 30px rgba(0,0,0,0.08);
+}
+
+.photo-frame{
+    width:95px;
+    height:95px;
+    margin:0 auto 20px;
+    border-radius:50%;
+    overflow:hidden;
+}
+
+.photo-frame img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
+}
+
+h2{
+    color:#444;
+    font-weight:500;
+}
+
+.btn-group{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-top:20px;
+}
+
+button{
+    padding:10px 25px;
+    border-radius:50px;
+    border:none;
+    cursor:pointer;
+    font-weight:500;
+    transition:.3s;
+}
+
+button:hover{
+    transform:scale(1.05);
+}
+
+.btn-yes{
+    background:#d8c3a5;
+    color:#4a4a4a;
+}
+
+.btn-no{
+    background:#ececec;
+    color:#555;
+}
+
+#typewriter{
+    font-size:0.95rem;
+    line-height:1.6;
+    color:#555;
+    margin-top:20px;
+    min-height:50px;
+}
+
+#fotoAnim,
+#btnAnim{
+    opacity:0;
+}
+
+.card-pop{
+    animation:cardPop .5s cubic-bezier(.18,.89,.32,1.28) forwards;
+}
+
+.photo-pop{
+    animation:photoPop .8s forwards;
+}
+
+.show-pop{
+    animation:photoPop .7s forwards;
+}
+
+@keyframes cardPop{
+    0%{
+        opacity:0;
+        transform:scale(.9);
+    }
+
+    100%{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+@keyframes photoPop{
+    0%{
+        opacity:0;
+        transform:scale(0);
+    }
+    70%{
+        transform:scale(1.2);
+    }
+    100%{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+@keyframes bounce{
+    0%,20%,50%,80%,100%{
+        transform:translateY(0);
+    }
+    40%{
+        transform:translateY(-10px);
+    }
+    60%{
+        transform:translateY(-5px);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="stage1" onclick="toStage2()">
+    <div class="gmail-notif">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" width="40" style="margin-right:15px;">
+
+        <div class="gmail-text">
+            <h4>1 New Notification</h4>
+            <p>aku nitip sesuatu di sini, buka yaa</p>
+        </div>
+    </div>
+</div>
+
+<div id="stage2" class="card">
+
+    <div class="photo-frame" id="fotoAnim">
+        <img src="foto.jpg.jpeg" alt="foto">
+    </div>
+
+    <h2 id="judulAnim"></h2>
+
+    <p id="teksAnim"
+       style="margin-top:10px;font-size:0.9rem;color:#666;">
+    </p>
+
+    <div class="btn-group" id="btnAnim">
+        <button class="btn-yes" onclick="toStage3()">yes</button>
+
+        <button class="btn-no"
+            onclick="alert('ihh gabole, hrs yes pokona')">
+            no
+        </button>
+    </div>
+
+</div>
+
+<div id="stage3" class="card">
+    <div class="photo-frame">
+        <img src="foto.jpg.jpeg" alt="foto">
+    </div>
+
+    <h3 style="color:#555;">hehe</h3>
+
+    <div id="typewriter"></div>
+
+    <button
+        class="btn-yes"
+        style="margin-top:20px;width:100%;"
+        onclick="location.reload()">
+        penasaran ya?
+    </button>
+</div>
+
+<script>
+
+const messageText = "gda si, iseng aja";
+const judulText = "hbd orang gede";
+const teksText = "jan iseng klik no!!!";
+
+function toStage2(){
+
+    document.getElementById('stage1').style.display='none';
+
+    const card = document.getElementById('stage2');
+
+    card.style.display='block';
+    card.classList.add('card-pop');
+
+    setTimeout(()=>{
+        document.getElementById('fotoAnim').classList.add('photo-pop');
+    },400);
+
+    setTimeout(()=>{
+        ketikJudul();
+    },900);
+}
+
+function ketikJudul(){
+
+    let i = 0;
+
+    function ketik(){
+
+        if(i < judulText.length){
+
+            document.getElementById('judulAnim').innerHTML += judulText.charAt(i);
+
+            i++;
+
+            setTimeout(ketik,70);
+
+        }else{
+
+            ketikTeks();
+
+        }
+    }
+
+    ketik();
+}
+
+function ketikTeks(){
+
+    let i = 0;
+
+    function ketik(){
+
+        if(i < teksText.length){
+
+            document.getElementById('teksAnim').innerHTML += teksText.charAt(i);
+
+            i++;
+
+            setTimeout(ketik,50);
+
+        }else{
+
+            document.getElementById('btnAnim').classList.add('show-pop');
+
+        }
+    }
+
+    ketik();
+}
+
+function toStage3(){
+
+    document.getElementById('stage2').style.display='none';
+    document.getElementById('stage3').style.display='block';
+
+    let i = 0;
+    const speed = 50;
+
+    function typeWriter(){
+
+        if(i < messageText.length){
+
+            document.getElementById("typewriter").innerHTML += messageText.charAt(i);
+
+            i++;
+
+            setTimeout(typeWriter,speed);
+
+        }
+    }
+
+    typeWriter();
+}
+
+</script>
+
+</body>
+</html>
+
